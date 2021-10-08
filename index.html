@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBconferência</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="imagens/favicon_io-2/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+    <header>
+        <h1><img src="imagens/icone_cam1.png" alt="Icone camera"> WEBconferência</h1>
+    </header>
+
+    <div id='acesso_usuario'>
+        <form id='login'>
+            <input type="text" placeholder='Insira seu apelido' name="apelido" id="apelido">
+            <input type="submit" value="Entrar">
+        </form>
+
+    </div>
+
+    <div id="sala_chat">
+
+        <div id="conteudo">
+            <main>
+                    <div class="quadros">
+                        <div class="box"> 
+                            <img src="imagens/ima.cam.png" alt="web cam do user">
+                            <div class="descrição">
+                                <p> Pedro</p>
+                            </div>
+                            
+                        </div>
+                        <div class="box">
+                            <img src="imagens/ima.cam.png" alt="web cam do user">
+                            <div class="descrição">
+                                <p> João</p>
+                            </div>
+                            
+                        </div>   
+                    </div>
+    
+                    
+                    
+                </main>
+                <div id="cont">
+                    <div class="controles">
+                        <div class="opcao"> 
+                            <abbr title="Desligar microfone"><img src="imagens/icone_mic.png" alt="Microfone"></abbr>
+                        </div>
+                        <div class="opcao"> 
+                        <abbr title="Desligar a ligação"><img src="imagens/tel_end.png" alt="Terminar ligação"></abbr> 
+                        </div>
+                        <div class="opcao">
+                        <abbr title="Desligar câmera"><img src="imagens/icone_cam2.png" alt="Camera"></abbr> 
+                            
+                        </div>   
+                    </div>
+                </div>
+                
+    
+                <div id="chat2">
+                    
+                    <div id="historico_mensagens">
+            
+                    </div>
+                    <select multiple="multiple" id="lista_usuarios">
+                        <option value="">Todos</option>
+                    </select>
+            
+                    <form id='chat'>
+                        <input type="text" id='texto_mensagem' name='texto_mensagem'>
+                        <input type="submit" value='Enviar'/>
+                    </form>
+                </div>
+        </div>
+
+    </div>
+    
+    
+    
+    <footer>
+        <p>Site criado por Luis Gustavo Hang Pereira</p>
+    </footer>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io.connect();
+
+        $("form#chat").submit(function(e){
+            e.preventDefault();
+            socket.emit("enviar mensagem", $(this).find("#texto_mensagem").val(), function(){
+                $("form#chat #texto_mensagem").val("");
+            });
+             
+        });
+
+        socket.on("atualizar mensagens", function(mensagem){
+            var mensagem_formatada = $("<p />").text(mensagem);
+            $("#historico_mensagens").append(mensagem_formatada);
+        });
+
+        $("form#login").submit(function(e){
+            e.preventDefault();
+
+            socket.emit("entrar", $(this).find("#apelido").val(), function(valido){
+                if(valido){
+                    $("#acesso_usuario").hide();
+                    $("#sala_chat").show();
+                }else{
+                    $("#acesso_usuario").val("");
+                    alert("Nome já utilizado nesta sala");
+                }
+            });
+        });
+
+        socket.on("atualizar usuarios", function(usuarios){
+            $("#lista_usuarios").empty();
+            $("#lista_usuarios").append("<option value=''>Todos</option>");
+            $.each(usuarios, function(indice){
+                var opcao_usuario = $("<option />").text(usuarios[indice]);
+                $("#lista_usuarios").append(opcao_usuario);
+            });
+        });
+
+    </script>
+
+</body>
+</html>
