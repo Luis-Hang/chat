@@ -10,4 +10,8 @@ Node.js
 
 Socket.io
 
+# Installation 
+
+Clone the project:
+
 
