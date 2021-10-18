@@ -21,4 +21,7 @@ Copy: https://github.com/Luis-Hang/chat.git
 3. Type git clone and paste the URL you copied earlier:
   '''bash
   $ git clone https://github.com/Luis-Hang/chat.git
-  '''
+'''
+```bash
+pip install foobar
+```
