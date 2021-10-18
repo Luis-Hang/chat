@@ -1,11 +1,10 @@
-# chat
+# Chat
 
-Parte do chat por mesagens do projeto de um site video chamada
+# About the project
 
-No arquivo app.js há parte de criação de servidor e backend
+This is one the parts of a video conferencing room project, here have the part of messenger chat usining node
 
-No arquivo index.html toda a parte html e script do frontend
+# Modules and requirements
 
-Pasta imagens possui todas as imagens utilizandas para a confecção do site
-
-Para funcionamento precisa do npm install e rodar o app.js com o node 
+Node.js
+Socket.io
