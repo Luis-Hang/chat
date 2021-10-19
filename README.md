@@ -30,3 +30,4 @@ Finally for run
 ```bash
 node app.js
 ```
+Now open http://localhost:3000/ in a browser
