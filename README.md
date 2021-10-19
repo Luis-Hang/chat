@@ -26,3 +26,7 @@ git clone https://github.com/Luis-Hang/chat.git
 ```bash
 npm install socket.io
 ```
+Finally for run
+```bash
+node app.js
+```
